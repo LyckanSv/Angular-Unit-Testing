@@ -25,4 +25,11 @@ export class PostService {
       `https://jsonplaceholder.typicode.com/posts/${post.id}`
     );
   }
+
+  updatePost(post: IPost) {
+    return this.httpClient.put(
+      `https://jsonplaceholder.typicode.com/posts/${post.id}`,
+      post
+    );
+  }
 }
