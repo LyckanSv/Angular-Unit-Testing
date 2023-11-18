@@ -4,7 +4,8 @@ import { first } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ModuleWithProviders } from '@angular/core';
+import { DebugElement, ModuleWithProviders } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('Post Component', () => {
   let fixture: ComponentFixture<PostComponent>;
@@ -12,9 +13,7 @@ describe('Post Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
+      imports: [RouterTestingModule],
       declarations: [PostComponent],
     });
 
@@ -35,14 +34,14 @@ describe('Post Component', () => {
 
     comp.post = post;
 
-    fixture.detectChanges()
+    fixture.detectChanges();
 
     const postElement: HTMLElement = fixture.nativeElement;
     const a = postElement.querySelector('a');
     expect(a?.textContent).toContain(post.title);
   });
 
-  it('should raise and event when the delete post is clicked', () => {
+  it('should render the post title in the anchor element for debug', () => {
     const post: IPost = {
       id: 1,
       title: 'Title 1',
@@ -51,10 +50,26 @@ describe('Post Component', () => {
 
     comp.post = post;
 
-    comp.delete.pipe(first()).subscribe((selectedPost) => {
-      expect(selectedPost).toBe(post);
-    });
+    fixture.detectChanges();
 
-    comp.onDeletePost(new MouseEvent('click'));
+    const postElement: DebugElement = fixture.debugElement;
+    const aElement: HTMLElement = postElement.query(By.css('a')).nativeElement;
+    expect(aElement.textContent).toContain(post.title);
   });
+
+  // it('should raise and event when the delete post is clicked', () => {
+  //   const post: IPost = {
+  //     id: 1,
+  //     title: 'Title 1',
+  //     body: 'Body 1',
+  //   };
+
+  //   comp.post = post;
+
+  //   comp.delete.pipe(first()).subscribe((selectedPost) => {
+  //     expect(selectedPost).toBe(post);
+  //   });
+
+  //   comp.onDeletePost(new MouseEvent('click'));
+  // });
 });

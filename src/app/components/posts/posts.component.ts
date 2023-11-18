@@ -5,26 +5,25 @@ import { PostService } from 'src/app/services/Post/post.service';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss']
+  styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
-  posts: IPost[] = []
+  posts: IPost[] = [];
 
-  constructor( private postService: PostService){}
+  constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.getPost()
+    this.getPost();
   }
 
   getPost() {
-    this.postService.getPost().subscribe((posts) => {
-      this.posts = posts
-    })
+    this.postService.getPosts().subscribe((posts) => {
+      this.posts = posts;
+    });
   }
 
-  delete(post: IPost){
-    this.posts = this.posts.filter(p => p.id !== post.id)
-    this.postService.deletePost(post).subscribe()
+  delete(post: IPost) {
+    this.posts = this.posts.filter((p) => p.id !== post.id);
+    this.postService.deletePost(post).subscribe();
   }
-
 }

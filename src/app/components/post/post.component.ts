@@ -8,11 +8,11 @@ import { IPost } from 'src/app/models/Post';
 })
 export class PostComponent {
   @Input() post?: IPost;
-  @Output() delete= new EventEmitter<IPost>();
+  @Output() delete = new EventEmitter<IPost>();
   constructor() {}
 
   onDeletePost($event: MouseEvent) {
-    $event.stopPropagation();
-    this.delete?.emit(this.post)
+    $event?.stopPropagation();
+    this.delete?.emit(this.post);
   }
 }
